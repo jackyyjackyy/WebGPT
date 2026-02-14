@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GDP - Mobilní Test</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            background: #f5f5f5;
+        }
+        .test-card {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-card h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .status.pass {
+            background: #4caf50;
+            color: white;
+        }
+        .status.pending {
+            background: #ff9800;
+            color: white;
+        }
+        button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            min-width: 48px;
+            min-height: 48px;
+        }
+        button:active {
+            background: #1976D2;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .touch-test {
+            background: #e8eaf6;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 10px 0;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-card">
+        <h1>📱 GDP Mobilní Test</h1>
+        <p>Tento test ověří, že aplikace funguje správně na Galaxy S23.</p>
+    </div>
+
+    <div class="test-card">
+        <h2>1️⃣ Viewport Test</h2>
+        <div id="viewport-result" class="status pending">Testování...</div>
+        <div class="info">
+            <strong>Rozlišení:</strong> <span id="resolution"></span><br>
+            <strong>Device Pixel Ratio:</strong> <span id="dpr"></span><br>
+            <strong>Touch Support:</strong> <span id="touch"></span><br>
+            <strong>User Agent:</strong> <span id="ua" style="font-size: 12px; word-break: break-all;"></span>
+        </div>
+    </div>
+
+    <div class="test-card">
+        <h2>2️⃣ Touch Test</h2>
+        <div class="touch-test" id="touchArea">
+            👆 Klikni nebo se dotkni zde
+        </div>
+        <div id="touch-count" class="info">Počet dotyků: 0</div>
+    </div>
+
+    <div class="test-card">
+        <h2>3️⃣ LocalStorage Test</h2>
+        <button onclick="testStorage()">Test LocalStorage</button>
+        <div id="storage-result"></div>
+    </div>
+
+    <div class="test-card">
+        <h2>4️⃣ Input Test</h2>
+        <p>Zkus napsat text (testuje virtuální klávesnici):</p>
+        <input type="text" id="testInput" placeholder="Napiš něco...">
+        <div id="input-feedback" class="info" style="margin-top: 10px; display: none;"></div>
+    </div>
+
+    <div class="test-card">
+        <h2>5️⃣ Scroll Test</h2>
+        <div class="info">
+            <strong>Scroll pozice:</strong> <span id="scroll-pos">0</span>px<br>
+            <strong>Stránka výška:</strong> <span id="page-height"></span>px
+        </div>
+    </div>
+
+    <div class="test-card">
+        <h2>6️⃣ Orientace Test</h2>
+        <div id="orientation-result" class="info"></div>
+    </div>
+
+    <div class="test-card">
+        <h2>✅ Výsledky</h2>
+        <button onclick="window.location.href='index.html'" style="width: 100%; background: #4caf50; font-size: 18px;">
+            🎮 Otevřít GDP Aplikaci
+        </button>
+        <div style="margin-top: 10px;">
+            <button onclick="location.reload()" style="background: #757575;">
+                🔄 Zopakovat test
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let touchCount = 0;
+
+        // Viewport test
+        function updateViewport() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const dpr = window.devicePixelRatio || 1;
+            const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            
+            document.getElementById('resolution').textContent = `${width}x${height}`;
+            document.getElementById('dpr').textContent = dpr;
+            document.getElementById('touch').textContent = hasTouch ? '✅ Ano' : '❌ Ne';
+            document.getElementById('ua').textContent = navigator.userAgent;
+            
+            const viewportOk = width > 0 && height > 0;
+            document.getElementById('viewport-result').textContent = viewportOk ? '✅ OK' : '❌ Chyba';
+            document.getElementById('viewport-result').className = 'status ' + (viewportOk ? 'pass' : 'pending');
+        }
+
+        // Touch test
+        const touchArea = document.getElementById('touchArea');
+        touchArea.addEventListener('click', () => {
+            touchCount++;
+            document.getElementById('touch-count').innerHTML = `✅ Počet dotyků: ${touchCount}`;
+            touchArea.style.background = '#c5e1a5';
+            touchArea.textContent = '✅ Touch funguje!';
+        });
+
+        // LocalStorage test
+        function testStorage() {
+            try {
+                const testKey = 'gdp_test_' + Date.now();
+                const testValue = 'test_data_' + Math.random();
+                localStorage.setItem(testKey, testValue);
+                const retrieved = localStorage.getItem(testKey);
+                localStorage.removeItem(testKey);
+                
+                const success = retrieved === testValue;
+                document.getElementById('storage-result').innerHTML = success 
+                    ? '<div class="success">✅ LocalStorage funguje správně!</div>'
+                    : '<div class="info">❌ LocalStorage nefunguje!</div>';
+            } catch (e) {
+                document.getElementById('storage-result').innerHTML = 
+                    '<div class="info">❌ Chyba: ' + e.message + '</div>';
+            }
+        }
+
+        // Input test
+        document.getElementById('testInput').addEventListener('input', (e) => {
+            const feedback = document.getElementById('input-feedback');
+            feedback.style.display = 'block';
+            feedback.textContent = `✅ Virtuální klávesnice funguje! Napsáno: "${e.target.value}"`;
+        });
+
+        // Scroll test
+        function updateScroll() {
+            document.getElementById('scroll-pos').textContent = Math.round(window.scrollY);
+            document.getElementById('page-height').textContent = document.documentElement.scrollHeight;
+        }
+
+        window.addEventListener('scroll', updateScroll);
+
+        // Orientation test
+        function updateOrientation() {
+            const orientation = window.screen.orientation?.type || 
+                              (window.innerHeight > window.innerWidth ? 'portrait' : 'landscape');
+            document.getElementById('orientation-result').innerHTML = 
+                `<strong>Aktuální orientace:</strong> ${orientation}<br>` +
+                `<em>Otoč telefon a sleduj změnu</em>`;
+        }
+
+        window.addEventListener('orientationchange', updateOrientation);
+        window.addEventListener('resize', () => {
+            updateOrientation();
+            updateViewport();
+            updateScroll();
+        });
+
+        // Initialize
+        updateViewport();
+        updateOrientation();
+        updateScroll();
+
+        // Auto test storage after 1 second
+        setTimeout(testStorage, 1000);
+    </script>
+</body>
+</html>

@@ -163,7 +163,16 @@ Použijte cloud služby pro hosting a testování.
 
 ## 📋 Testovací checklist pro Galaxy S23
 
-Po spuštění aplikace otestujte:
+### 🧪 Před testováním GDP
+Nejdříve otevřete [mobile-test.html](mobile-test.html) - interaktivní stránka pro ověření mobilních funkcí:
+- Test viewportu a rozlišení
+- Test touch ovládání
+- Test LocalStorage
+- Test virtuální klávesnice
+- Test scrollování a orientace
+
+### ✅ Testování GDP aplikace
+Po spuštění hlavní aplikace otestujte:
 
 - [ ] ✅ Aplikace se načte a zobrazí správně
 - [ ] ✅ Responzivní design funguje na mobilu
