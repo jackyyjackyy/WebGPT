@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Development Planner - Blender & Unity</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 Game Development Planner</h1>
+            <p class="subtitle">Workflow pro Blender 5.x & Unity 6.x</p>
+            <div class="user-selector">
+                <label>Vývojář:</label>
+                <select id="userSelect">
+                    <option value="dev1">Vývojář 1</option>
+                    <option value="dev2">Vývojář 2</option>
+                </select>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Left Sidebar - Aspect Selection -->
+            <aside class="sidebar">
+                <h2>Aspekty herního designu</h2>
+                <div class="aspect-categories">
+                    <div class="category">
+                        <h3>📐 Blender (Modeling & Assets)</h3>
+                        <button class="aspect-btn" data-aspect="character-modeling">Character Modeling</button>
+                        <button class="aspect-btn" data-aspect="environment-modeling">Environment Modeling</button>
+                        <button class="aspect-btn" data-aspect="props-modeling">Props & Objects</button>
+                        <button class="aspect-btn" data-aspect="texturing">Texturing & Materials</button>
+                        <button class="aspect-btn" data-aspect="rigging">Rigging & Animation</button>
+                        <button class="aspect-btn" data-aspect="vfx">VFX & Particles</button>
+                    </div>
+
+                    <div class="category">
+                        <h3>🎯 Unity (Implementation)</h3>
+                        <button class="aspect-btn" data-aspect="game-mechanics">Game Mechanics</button>
+                        <button class="aspect-btn" data-aspect="player-controller">Player Controller</button>
+                        <button class="aspect-btn" data-aspect="ai-systems">AI Systems</button>
+                        <button class="aspect-btn" data-aspect="physics">Physics & Collisions</button>
+                        <button class="aspect-btn" data-aspect="ui-ux">UI/UX Design</button>
+                        <button class="aspect-btn" data-aspect="audio">Audio & Sound</button>
+                        <button class="aspect-btn" data-aspect="lighting">Lighting & Post-Processing</button>
+                        <button class="aspect-btn" data-aspect="optimization">Optimization</button>
+                    </div>
+
+                    <div class="category">
+                        <h3>📝 Design & Planning</h3>
+                        <button class="aspect-btn" data-aspect="story">Story & Narrative</button>
+                        <button class="aspect-btn" data-aspect="level-design">Level Design</button>
+                        <button class="aspect-btn" data-aspect="gameplay">Gameplay Design</button>
+                        <button class="aspect-btn" data-aspect="art-direction">Art Direction</button>
+                        <button class="aspect-btn" data-aspect="technical-spec">Technical Specifications</button>
+                    </div>
+
+                    <div class="category">
+                        <h3>🔧 Workflow & Integration</h3>
+                        <button class="aspect-btn" data-aspect="pipeline">Blender → Unity Pipeline</button>
+                        <button class="aspect-btn" data-aspect="version-control">Version Control</button>
+                        <button class="aspect-btn" data-aspect="testing">Testing & QA</button>
+                        <button class="aspect-btn" data-aspect="documentation">Documentation</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="content-area">
+                <div class="welcome-screen" id="welcomeScreen">
+                    <h2>👋 Vítejte v Game Development Planneru</h2>
+                    <p>Vyberte aspekt z levé strany pro zahájení práce.</p>
+                    <div class="stats">
+                        <div class="stat-card">
+                            <h3 id="totalTasks">0</h3>
+                            <p>Celkem úkolů</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="completedTasks">0</h3>
+                            <p>Dokončeno</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="activeAspects">0</h3>
+                            <p>Aktivních aspektů</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="work-area" id="workArea" style="display: none;">
+                    <div class="aspect-header">
+                        <h2 id="currentAspectTitle"></h2>
+                        <button class="btn-secondary" id="closeAspect">✕ Zavřít</button>
+                    </div>
+
+                    <!-- Planning Section -->
+                    <section class="planning-section">
+                        <h3>📋 Plánování</h3>
+                        <div class="form-group">
+                            <label for="planInput">Popis úkolu / Volby designu:</label>
+                            <textarea id="planInput" rows="3" placeholder="Popište co plánujete udělat..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="prioritySelect">Priorita:</label>
+                            <select id="prioritySelect">
+                                <option value="low">Nízká</option>
+                                <option value="medium" selected>Střední</option>
+                                <option value="high">Vysoká</option>
+                                <option value="critical">Kritická</option>
+                            </select>
+                        </div>
+                        <button class="btn-primary" id="addPlanBtn">➕ Přidat plán</button>
+                    </section>
+
+                    <!-- Task List -->
+                    <section class="task-list">
+                        <h3>📝 Úkoly</h3>
+                        <div id="taskListContainer">
+                            <p class="empty-message">Zatím nejsou žádné úkoly. Přidejte první plán!</p>
+                        </div>
+                    </section>
+
+                    <!-- Change Log Section -->
+                    <section class="changelog-section">
+                        <h3>📜 Historie změn</h3>
+                        <div class="form-group">
+                            <label for="changeInput">Poznámka ke změně:</label>
+                            <textarea id="changeInput" rows="2" placeholder="Popište co jste změnili..."></textarea>
+                        </div>
+                        <button class="btn-primary" id="addChangeBtn">💾 Zapsat změnu</button>
+                        <div id="changelogContainer" class="changelog-list">
+                            <p class="empty-message">Zatím nejsou žádné změny zaznamenány.</p>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
