@@ -203,7 +203,7 @@ class GameDevPlanner {
                             <span class="priority-badge priority-${task.priority}">
                                 ${this.getPriorityLabel(task.priority)}
                             </span>
-                            <span>👤 ${task.createdBy === 'dev1' ? 'Vývojář 1' : 'Vývojář 2'}</span>
+                            <span>👤 ${task.createdBy === 'dev1' ? 'Jack' : 'Joker'}</span>
                             <span>📅 ${this.formatDate(task.createdAt)}</span>
                             ${task.completed ? `<span>✅ ${this.formatDate(task.completedAt)}</span>` : ''}
                         </div>
@@ -230,7 +230,7 @@ class GameDevPlanner {
             <div class="changelog-item">
                 <div class="changelog-header">
                     <span class="changelog-user">
-                        ${change.user === 'dev1' ? '👤 Vývojář 1' : '👤 Vývojář 2'}
+                        ${change.user === 'dev1' ? '👤 Jack' : '👤 Joker'}
                     </span>
                     <span>📅 ${this.formatDateTime(change.timestamp)}</span>
                 </div>
