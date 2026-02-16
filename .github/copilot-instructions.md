@@ -1,13 +1,13 @@
-## Repository Context
-- Single-page planner app for Blender/Unity workflow; pure HTML/CSS/vanilla JS with LocalStorage persistence and no build tooling.
-- UI and docs are Czech; keep developer names Jack (dev1) and Joker (dev2), and retain existing LocalStorage keys/data shape.
-- Deployed via GitHub Pages; avoid adding dependencies or breaking static hosting (no bundlers/frameworks).
+## Kontext repozitáře
+- Jednostránkový plánovač pro workflow Blender/Unity; čisté HTML/CSS/vanilla JS s persistencí v LocalStorage a bez build nástrojů.
+- UI i dokumentace jsou v češtině; zachovej jména Jack (dev1) a Joker (dev2) a strukturu/klíče LocalStorage.
+- Nasazení přes GitHub Pages; nepřidávej závislosti ani nástroje, které by rozbily statické hostování (žádné bundlery/frameworky).
 
-## Coding Guidelines
-- Keep text in Czech; match existing tone/emojis; do not introduce English UI copy.
-- Prefer minimal, direct DOM/JS; avoid new libraries; keep CSS responsive behavior intact.
-- Preserve current data model and LocalStorage keys; avoid schema changes unless required.
-- Stay consistent with existing file layout: main app in `index.html`, logic in `script.js`, styles in `styles.css`.
+## Pravidla pro kódování
+- Drž se češtiny, tónu a emoji; nepřidávej anglické texty do UI.
+- Preferuj jednoduchý, přímočarý DOM/JS; nepřidávej nové knihovny; zachovej responzivní chování CSS.
+- Zachovej současný datový model a klíče LocalStorage; neměň schéma, pokud to není nutné.
+- Dodrž stávající rozložení souborů: hlavní app v `index.html`, logika v `script.js`, styly ve `styles.css`.
 
-## Testing & Validation
-- No automated tests; after changes, load `index.html` via `python3 -m http.server 8000` and sanity-check task creation, aspect filters, and persistence in the browser.
+## Testování a ověření
+- Nejsou automatické testy; po změnách spusť `python3 -m http.server 8000`, otevři `index.html` a ručně ověř vytváření úkolů, filtry aspektů a persistenci v prohlížeči.
